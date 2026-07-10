@@ -83,6 +83,40 @@ For RDP, use Microsoft Remote Desktop (or any RDP client) pointed at the server'
 - Workaround: use an HDMI dummy plug, or SSH in instead
 - TODO: Fix headless RDP
 
+### "Permission denied" on SSH despite correct password
+- SSH password auth can fail when the connection is non-interactive (e.g. piped input, scripts)
+- The server requires an interactive TTY for password entry — tools that pipe the password in will get rejected even with the correct credentials
+- **Fix:** Use SSH key-based authentication instead (see below)
+
+### Setting Up SSH Key Auth (Recommended)
+
+Key-based auth is more secure and avoids password issues entirely. Your private key never leaves your machine.
+
+**On your local machine:**
+```bash
+# If you don't have a key yet, generate one:
+ssh-keygen -t ed25519
+
+# Copy your public key to the server (requires someone already on the server to run this):
+# On the server, run:
+mkdir -p ~/.ssh && echo '<your-public-key-here>' >> ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+```
+
+**Then connect with:**
+```bash
+ssh -i ~/.ssh/id_ed25519 kc-llm@<server-tailscale-ip>
+```
+
+To get your public key, run `cat ~/.ssh/id_ed25519.pub` (or whatever key file you have) and send it to someone who already has server access.
+
+### "User invite already completed" on Tailscale
+- Invite links are single-use — if someone else used it, you need a fresh one from the admin
+- Ask Varun to generate a new invite from `login.tailscale.com/admin/users`
+
+### "User approval required" on Tailscale
+- After joining the Tailnet, the admin must approve your device
+- Ask Varun to go to `login.tailscale.com/admin/users` and approve your pending account
+
 ### Common Mistakes
 - Using LAN IP (192.168.x.x) — only works if you're on the same physical network
 - Using the Tailscale IP without being on the Tailnet — will time out
