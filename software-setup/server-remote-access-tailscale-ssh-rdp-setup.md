@@ -12,13 +12,15 @@ The server is accessible remotely via Tailscale (mesh VPN). Direct LAN IP or pub
 
 ---
 
-## Access Credentials
+## Access Info
 
-| Method | Address | User | Password |
-|--------|---------|------|----------|
-| SSH | `ssh kc-llm@<tailscale-ip>` | kc-llm | kh@nn@11mb0x |
-| RDP | `<tailscale-ip>` (port 3389) | kc-llm | kh@nn@11mb0x |
-| Hostname (on Tailscale network) | kc-llm-ms-7e85 | — | — |
+| Method | Address | User |
+|--------|---------|------|
+| SSH | `ssh kc-llm@<tailscale-ip>` | kc-llm |
+| RDP | `<tailscale-ip>` (port 3389) | kc-llm |
+| Hostname (on Tailscale network) | kc-llm-ms-7e85 | — |
+
+> Credentials are shared privately — do not store them in this repo.
 
 ---
 
@@ -128,4 +130,4 @@ To get your public key, run `cat ~/.ssh/id_ed25519.pub` (or whatever key file yo
 
 - Each team member needs their own Tailscale invite link (single-use)
 - Varun is the Tailnet admin and must approve new devices
-- The server's sudo password is the same as the login password
+- The server's sudo password is the same as the login password (ask Varun for credentials)
